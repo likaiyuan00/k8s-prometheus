@@ -32,6 +32,7 @@ spec:
         volumeMounts:
         - mountPath: "/prometheus"
           name: data
+         # name: data-host    #chmod 777 /etc/prometheus/data/
         - mountPath: "/etc/prometheus"
           name: config-volume
         resources:
@@ -45,6 +46,10 @@ spec:
       volumes:
       - name: data
         emptyDir: {}
+    #  - name: data-host
+   #     hostPath:
+    #      path: /etc/prometheus/data       # 主机本地存储路径
+    #      type: DirectoryOrCreate      # 自动创建目录（若不存在）
       - name: config-volume
         configMap:
           name: prometheus-config   
