@@ -49,8 +49,13 @@ spec:
           # timeoutSeconds: 1
         volumeMounts:
         - name: grafana-persistent-storage
-          #mountPath: /var
           mountPath: /var/lib/grafana/data 
+       # - name: grafana-persistent-storage-host
+        #  mountPath: /var/lib/grafana    #chmod 777 /var/lib/grafana/data/ 
       volumes:
       - name: grafana-persistent-storage
         emptyDir: {}
+    #  - name: grafana-persistent-storage-host
+    #    hostPath:
+    #      path: /var/lib/grafana/data  # 主机上的存储路径
+     #     type: DirectoryOrCreate      # 如果目录不存在则自动创建
