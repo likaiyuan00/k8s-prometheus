@@ -1,7 +1,7 @@
 # k8s-prometheus
 部署kubernetes_sd_configs
 配置文件只采集了
-1.prometheus*  prometheus-server
+*prometheus*  prometheus-server
 2.container*   kubelet 的10250端口  /metrics/cadvisor
 node*    node_exporter
 apiserver*  apiserver 6443 端口 /metrics
