@@ -11,11 +11,11 @@ metadata:
 rules:
 - apiGroups: [""]
   resources: ["nodes", "pods", "services", "resourcequotas", "replicationcontrollers", "limitranges", "persistentvolumeclaims", "persistentvolumes", "namespaces", "endpoints"]
-  verbs: ["list", "watch"]
+  verbs: ["list", "watch","get"]
 #- apiGroups: ["extensions"] 看这几个资源对应的开头是什么注意不要选错我的是apiVersion: apps/v1;所以写apps
 - apiGroups: ["apps"]
   resources: ["daemonsets", "deployments", "replicasets"]
-  verbs: ["list", "watch"]
+  verbs: ["list", "watch","get"]
 - apiGroups: ["apps"]
   resources: ["statefulsets"]
   verbs: ["list", "watch"]
