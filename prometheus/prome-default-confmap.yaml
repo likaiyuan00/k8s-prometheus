@@ -111,7 +111,7 @@ data:
           target_label: namespace
 
       - job_name: kube-state-metrics
-        honor_labels: true  # 禁止重命名标签
+        honor_labels: true  # 禁止重命名标签如果不配置prometheus会默认加上exported_<原始标签>
         kubernetes_sd_configs:
         - role: endpoints
         relabel_configs:
