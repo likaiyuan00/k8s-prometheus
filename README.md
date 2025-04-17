@@ -7,7 +7,7 @@
 > 4 apiserver*  apiserver 6443 端口 /metrics<br>
 > 5 kube*  kube-state-metrics组件 8080端口 /metrics<br>
 > 6 coredns*  kubernetes-pods 自动发现 pod需要配置 prometheus.io/scrape: "true" 不然抓取不到 默认flase<br>
->> prometheus.io/path: "/metrics"   # 指标路径（默认 /metrics 可不写）<br>
+> prometheus.io/path: "/metrics"   # 指标路径（默认 /metrics 可不写）<br>
 > 7 kubelet*  apiserver代理端点 /api/v1/nodes/<node>/proxy/metrics
 其他有需要的可以自行配置
 
