@@ -111,6 +111,7 @@ data:
           target_label: namespace
 
       - job_name: kube-state-metrics
+        honor_labels: true  # 禁止重命名标签
         kubernetes_sd_configs:
         - role: endpoints
         relabel_configs:
