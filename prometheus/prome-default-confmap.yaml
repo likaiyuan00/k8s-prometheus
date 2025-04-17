@@ -14,7 +14,8 @@ data:
       - job_name: 'prometheus'
         static_configs:
           - targets: ['localhost:9090']
-
+          
+        #apiserver* 开头指标
       - job_name: 'kubernetes-apiservers'
         kubernetes_sd_configs:
         - role: endpoints
@@ -26,7 +27,10 @@ data:
         - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
           action: keep
           regex: default;kubernetes;https
-    
+          
+      #kubelet*对应/api/v1/nodes/<node>/proxy/metrics
+      #container*对应/api/v1/nodes/<node>/proxy/metrics/cadvisor 
+      #不建议使用apiserver代理获取数据(对apiserver负载高);使用kubelet 10250端口  /metrics/cadvisor去获取
       - job_name: 'kubernetes-nodes'
         kubernetes_sd_configs:
         - role: node
@@ -43,8 +47,14 @@ data:
           regex: (.+)
           target_label: __metrics_path__
           replacement: /api/v1/nodes/${1}/proxy/metrics
-    
-      - job_name: 'kubernetes-pods'
+      
+       #annotations:
+        # 核心注解：启用抓取
+       # prometheus.io/scrape: "true"     # 必须设置为 "true" 默认false
+       # prometheus.io/port: "80"       # 指标暴露的端口（与容器端口一致）
+        #prometheus.io/path: "/metrics"   # 指标路径（默认 /metrics 可不写）
+        #配置prometheus.io/scrape: "true" 是直接抓取pod数据,前提是这个pod有数据提供适用自定义开发的数据
+      - job_name: 'kubernetes-pods'  
         kubernetes_sd_configs:
         - role: pod
         relabel_configs:
@@ -68,6 +78,10 @@ data:
         - source_labels: [__meta_kubernetes_pod_name]
           action: replace
           target_label: kubernetes_pod_name
+          
+        #container* 开头是容器容器指标kubelet 10250端口  /metrics/cadvisor
+        #kubelet 10250端口  /metrics/ 节点指标和node_exporter类似
+        # /metrics/probes（探针）指标
       - job_name: kubelet-pods
         metrics_path: /metrics/cadvisor
         scheme: https
@@ -88,7 +102,8 @@ data:
         - source_labels: [__meta_kubernetes_namespace]
           action: replace
           target_label: namespace
- 
+          
+      #node*是节点指标node_exporter或者kubelet 的10250端口 /metrics;为了给kubelet减压用node_exporter代替
       - job_name: node_exporter
         kubernetes_sd_configs:
         - role: node
@@ -109,7 +124,8 @@ data:
         - source_labels: [__meta_kubernetes_namespace]
           action: replace
           target_label: namespace
-
+          
+        #kube*开头 是 kube-state-metrics 指标；集群应用状态监控
       - job_name: kube-state-metrics
         honor_labels: true  # 禁止重命名标签如果不配置prometheus会默认加上exported_<原始标签>
         kubernetes_sd_configs:
