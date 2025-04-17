@@ -80,7 +80,7 @@ data:
           target_label: kubernetes_pod_name
           
         #container* 开头是容器容器指标kubelet 10250端口  /metrics/cadvisor
-        #kubelet 10250端口  /metrics/ 节点指标和node_exporter类似
+        #kubelet 10250端口  /metrics 节点指标 对应apiserver /api/v1/nodes/<node>/proxy/metrics
         # /metrics/probes（探针）指标
       - job_name: kubelet-pods
         metrics_path: /metrics/cadvisor
@@ -103,7 +103,7 @@ data:
           action: replace
           target_label: namespace
           
-      #node*是节点指标node_exporter或者kubelet 的10250端口 /metrics;为了给kubelet减压用node_exporter代替
+      #node*是节点指标node_exporter或者kubelet 的10250端口 /metrics
       - job_name: node_exporter
         kubernetes_sd_configs:
         - role: node
