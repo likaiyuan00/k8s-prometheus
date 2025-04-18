@@ -17,7 +17,7 @@ spec:
         app: prometheus
     spec:
       containers:
-      - image: prom/prometheus:v3.3.0
+      - image: registry.cn-hangzhou.aliyuncs.com/lky-deploy/prometheus:v3.3.0
         name: prometheus
         command:
         - "/bin/prometheus"
