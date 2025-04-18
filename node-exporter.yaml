@@ -16,7 +16,7 @@ spec:
         k8s-app: node-exporter
     spec:
       containers:
-      - image: prom/node-exporter:v1.9.1
+      - image: registry.cn-hangzhou.aliyuncs.com/lky-deploy/nodeexporter:v1.9.1
         name: node-exporter
         ports:
         - containerPort: 9100
