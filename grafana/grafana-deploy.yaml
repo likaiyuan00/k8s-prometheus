@@ -18,7 +18,7 @@ spec:
         component: core
     spec:
       containers:
-      - image: grafana/grafana:7.4.1
+      - image: registry.cn-hangzhou.aliyuncs.com/lky-deploy/grafana:7.4.1
         name: grafana-core
         imagePullPolicy: IfNotPresent
         # env:
